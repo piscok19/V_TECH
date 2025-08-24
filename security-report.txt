@@ -1,0 +1,25 @@
+V Tech Website — Pentest (Static Review)
+Generated: 2025-08-24T03:52:40.312882
+
+SCOPE
+- Static single-page site (no backend).
+- Files: index.html, styles.css, app.js, .htaccess, netlify.toml, assets/
+
+FINDINGS
+1) Content Security Policy (CSP)
+   - Defined in .htaccess / netlify.toml.
+   - script-src 'self' only (no external JS): OK
+   - img-src allows self, data:, and Google Maps domains (for map tiles): OK
+   - Note: If your host enforces CSP on iframes, add `frame-src https://www.google.com https://maps.google.com`.
+
+2) X-Frame-Options SAMEORIGIN — OK
+3) Referrer-Policy strict-origin-when-cross-origin — OK
+4) Permissions-Policy: disables camera/mic/geolocation — OK
+5) Forms/CSRF: none; WA deep-link only — Low risk
+6) Input Handling: user text encoded via encodeURIComponent() — OK
+7) Dependencies: no external libraries — reduces supply-chain risk
+8) Mixed Content: all HTTPS — OK
+9) Caching: consider adding long-cache headers for images/CSS/JS in hosting panel
+10) Assets: replace placeholders with WebP for performance
+
+STATUS: No critical issues for this static site.
